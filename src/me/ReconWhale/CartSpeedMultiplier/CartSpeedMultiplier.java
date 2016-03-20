@@ -5,7 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 /**
  * Cart Speed Multiplier
  * Allows you to set the maximum velocity of minecarts.
- * @author Weilon Ying (WhalesAreDelicious)
+ * @author Weilon Ying (ReconWhale)
  *
  */
 public class CartSpeedMultiplier extends JavaPlugin {
