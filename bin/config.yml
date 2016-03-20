@@ -1,0 +1,6 @@
+# CartSpeedMultiplier by WhalesAreDelicious
+# Version 1.0
+
+# Set a multiplier for maximum speed of a minecart. Default speed = 1.0
+# WARNING: Anything beyond 1.5 can cause derailment.
+max_minecart_speed: 1.0
