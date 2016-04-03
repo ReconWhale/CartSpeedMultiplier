@@ -1,4 +1,5 @@
-package me.ReconWhale.CartSpeedMultiplier;
+package me.WeilonYing.CustomisedMinecarts;
+
 
 import org.bukkit.entity.Minecart;
 import org.bukkit.event.EventHandler;
@@ -24,24 +25,39 @@ public class VehicleListener implements Listener {
 		if (vehicle.getVehicle() instanceof Minecart) {
 			Minecart cart = (Minecart) vehicle.getVehicle();
 			cart.setMaxSpeed(getMinecartSpeed());
+			cart.setSlowWhenEmpty(getMinecartSlowWhenEmpty());
 		}
 	}
 	
+	private boolean getMinecartSlowWhenEmpty() {
+		String slowWhenEmpty = getSetting(Definitions.SETTING_SLOW_WHEN_EMPTY);
+		if (slowWhenEmpty.equalsIgnoreCase ("true")) {
+			return true;
+		} else if (slowWhenEmpty.equalsIgnoreCase ("false")) {
+			return false;
+		} else {
+			reportError(Definitions.SETTING_SLOW_WHEN_EMPTY);
+			return false;
+		}
+	}
+
 	private double getMinecartSpeed () {
 		double speed = Definitions.DEFAULT_MAX_MINECART_SPEED;
 		try {
-			plugin.reloadConfig(); //ensure we have latest version before getting speed.
-			
 			//set speed according to config.yml
-			double multiplier = Double.parseDouble(plugin.getConfig().getString(Definitions.MAX_MINECART_SPEED_SETTING));
+			String strMultiplier = getSetting (Definitions.SETTING_MAX_MINECART_SPEED);
+			double multiplier = Double.parseDouble (strMultiplier);
 			speed = multiplier * Definitions.DEFAULT_MAX_MINECART_SPEED;
-
 		} catch (NumberFormatException e) {
-			plugin.getLogger().severe("Unable to parse double " + Definitions.MAX_MINECART_SPEED_SETTING +
-					" in config.yml. Please ensure it is a decimal number.");
-			plugin.getLogger().warning("Using default minecart speed.");
+			reportError(Definitions.SETTING_MAX_MINECART_SPEED);
 		}
-		
 		return speed;
+	}
+	
+	private void reportError (String setting) {
+		plugin.getLogger().severe("Unable to parse setting " + setting + " in config.yml. Using default setting.");
+	}
+	private String getSetting(String setting) {
+		return plugin.getConfig().getString(setting);
 	}
 }

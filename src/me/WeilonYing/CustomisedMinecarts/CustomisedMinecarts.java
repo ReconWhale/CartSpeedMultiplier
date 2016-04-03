@@ -1,14 +1,14 @@
-package me.ReconWhale.CartSpeedMultiplier;
+package me.WeilonYing.CustomisedMinecarts;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Cart Speed Multiplier
  * Allows you to set the maximum velocity of minecarts and boats.
- * @author Weilon Ying (WhalesAreDelicious)
+ * @author Weilon Ying (http://github.com/WeilonYing)
  *
  */
-public class CartSpeedMultiplier extends JavaPlugin {
+public class CustomisedMinecarts extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
