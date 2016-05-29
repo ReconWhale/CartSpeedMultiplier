@@ -1,10 +1,13 @@
 package me.WeilonYing.CustomisedMinecarts;
 
 
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Minecart;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleCreateEvent;
+import org.bukkit.event.vehicle.VehicleMoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -13,51 +16,41 @@ import org.bukkit.plugin.java.JavaPlugin;
  *
  */
 public class VehicleListener implements Listener {
-	private JavaPlugin plugin;
-	
-	public VehicleListener (JavaPlugin pl) {
-		this.plugin = pl;
+    private JavaPlugin plugin;
+    private FileConfiguration cf;
+    private Manipulator m;
 
-	}
+    public VehicleListener (JavaPlugin pl) {
+        this.plugin = pl;
+        this.cf = this.plugin.getConfig();
+        this.m = new Manipulator (this.plugin);
+    }
 
-	@EventHandler
-	public void onMinecartSpawn (VehicleCreateEvent vehicle) {
-		if (vehicle.getVehicle() instanceof Minecart) {
-			Minecart cart = (Minecart) vehicle.getVehicle();
-			cart.setMaxSpeed(getMinecartSpeed());
-			cart.setSlowWhenEmpty(getMinecartSlowWhenEmpty());
-		}
-	}
-	
-	private boolean getMinecartSlowWhenEmpty() {
-		String slowWhenEmpty = getSetting(Definitions.SETTING_SLOW_WHEN_EMPTY);
-		if (slowWhenEmpty.equalsIgnoreCase ("true")) {
-			return true;
-		} else if (slowWhenEmpty.equalsIgnoreCase ("false")) {
-			return false;
-		} else {
-			reportError(Definitions.SETTING_SLOW_WHEN_EMPTY);
-			return false;
-		}
-	}
+    /**
+     * Sets minecart's parameters upon its spawning
+     * @param evt The minecart's creation (spawning) event
+     */
+    @EventHandler
+    public void onMinecartSpawn (VehicleCreateEvent evt) {
+        if (evt.getVehicle() instanceof Minecart) {
+            Minecart cart = (Minecart) evt.getVehicle();
 
-	private double getMinecartSpeed () {
-		double speed = Definitions.DEFAULT_MAX_MINECART_SPEED;
-		try {
-			//set speed according to config.yml
-			String strMultiplier = getSetting (Definitions.SETTING_MAX_MINECART_SPEED);
-			double multiplier = Double.parseDouble (strMultiplier);
-			speed = multiplier * Definitions.DEFAULT_MAX_MINECART_SPEED;
-		} catch (NumberFormatException e) {
-			reportError(Definitions.SETTING_MAX_MINECART_SPEED);
-		}
-		return speed;
-	}
-	
-	private void reportError (String setting) {
-		plugin.getLogger().severe("Unable to parse setting " + setting + " in config.yml. Using default setting.");
-	}
-	private String getSetting(String setting) {
-		return plugin.getConfig().getString(setting);
-	}
+            //Slow when empty setting
+            m.setMinecartSlowWhenEmpty(cart);
+        }
+    }
+
+    @EventHandler
+    public void onMinecartMove (VehicleMoveEvent evt) {
+        if (evt.getVehicle() instanceof Minecart) {
+            Minecart cart = (Minecart) evt.getVehicle();
+            
+            m.manipulateMinecart(cart);
+        }
+    }
+
+
+    private void reportError (String setting) {
+        plugin.getLogger().severe("Unable to parse setting " + setting + " in config.yml. Using default setting.");
+    }
 }
