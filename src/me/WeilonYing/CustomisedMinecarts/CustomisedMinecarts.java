@@ -15,6 +15,9 @@ public class CustomisedMinecarts extends JavaPlugin {
 		//copy default configuration if none found
 		saveDefaultConfig();
 		
+		//in case this plugin was reloaded, we refresh the config
+		reloadConfig();
+		
 		//register event listener
 		getServer().getPluginManager().registerEvents(new VehicleListener(this), this);
 	}

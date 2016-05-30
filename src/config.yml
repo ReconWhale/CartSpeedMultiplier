@@ -1,9 +1,32 @@
 # CustomisedMinecarts by WeilonYing
-# Version 1.0
-
-# Set a multiplier for maximum speed of a minecart. Default speed = 1.0
-# WARNING! Minecart may derail if max_minecart_speed is greater than 1.65
-max_minecart_speed: 1.0
+# Version 1.1
 
 # Set whether minecart will slow down automatically if it has no passenger.
 slow_minecart_when_empty: true
+
+# === BLOCKS ===
+# To find block names, see https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+
+# --- Boost Block ---
+# Set boost block item 
+boost_block: BRICK
+
+# Set boost block item data type (e.g. for granite, smooth sandstone etc. 
+# If no need to use this, simply set to 0
+boost_block_data: 0
+
+# Set boost multiplier. Note that minecart will derail on
+# curves if setting > 2. If you don't want this, ensure minecart
+# is slowed on approach to curve, or setting is <= 2
+boost_amount: 1.5
+
+# --- Brake Block ---
+# Set brake block item
+brake_block : HARD_CLAY
+
+# Set boost block item data type (e.g. for granite, smooth sandstone etc. 
+# If no need to use this, simply set to 0
+brake_block_data: 0
+
+# Set brake multiplier.
+brake_amount: 0.5
