@@ -1,5 +1,5 @@
 package me.WeilonYing.CustomisedMinecarts;
 
 public enum ManipulationOption {
-    BOOST, BRAKE;
+    FAST, SLOW, NORMAL, LAUNCHER;
 }

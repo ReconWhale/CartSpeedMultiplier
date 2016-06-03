@@ -20,37 +20,36 @@ public class VehicleListener implements Listener {
     private FileConfiguration cf;
     private Manipulator m;
 
-    public VehicleListener (JavaPlugin pl) {
+    public VehicleListener (JavaPlugin pl, Manipulator m) {
         this.plugin = pl;
         this.cf = this.plugin.getConfig();
-        this.m = new Manipulator (this.plugin);
+        this.m = m;
     }
 
     /**
      * Sets minecart's parameters upon its spawning
      * @param evt The minecart's creation (spawning) event
      */
-    @EventHandler
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onMinecartSpawn (VehicleCreateEvent evt) {
         if (evt.getVehicle() instanceof Minecart) {
             Minecart cart = (Minecart) evt.getVehicle();
 
             //Slow when empty setting
-            m.setMinecartSlowWhenEmpty(cart);
+            m.setMinecartSlowWhenEmpty(cart, cf.getBoolean(Definitions.SETTING_SLOW_WHEN_EMPTY));
         }
     }
-
-    @EventHandler
+    
+    /**
+     * Sets minecart's parameters when it moves
+     * @param evt The minecart's movement event
+     */
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onMinecartMove (VehicleMoveEvent evt) {
         if (evt.getVehicle() instanceof Minecart) {
             Minecart cart = (Minecart) evt.getVehicle();
             
             m.manipulateMinecart(cart);
         }
-    }
-
-
-    private void reportError (String setting) {
-        plugin.getLogger().severe("Unable to parse setting " + setting + " in config.yml. Using default setting.");
     }
 }

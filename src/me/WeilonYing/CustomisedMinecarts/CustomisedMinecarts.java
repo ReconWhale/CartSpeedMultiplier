@@ -19,7 +19,9 @@ public class CustomisedMinecarts extends JavaPlugin {
 		reloadConfig();
 		
 		//register event listener
-		getServer().getPluginManager().registerEvents(new VehicleListener(this), this);
+		Manipulator m = new Manipulator(this);
+		getServer().getPluginManager().registerEvents(new VehicleListener(this, m), this);
+		getServer().getPluginManager().registerEvents(new BlockListener(this, m), this);
 	}
 	
 	@Override 

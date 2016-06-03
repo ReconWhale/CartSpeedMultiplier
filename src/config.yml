@@ -1,32 +1,41 @@
 # CustomisedMinecarts by WeilonYing
 # Version 1.1
 
+# === DEFAULT MINECART SETTINGS ===
 # Set whether minecart will slow down automatically if it has no passenger.
 slow_minecart_when_empty: true
 
-# === BLOCKS ===
+# === MANIPULATOR BLOCKS ===
 # To find block names, see https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
 
-# --- Boost Block ---
-# Set boost block item 
-boost_block: BRICK
+# --- High Speed Block ---
+highspeed_block:
+    # Block name, e.g. STONE, GRASS etc.
+    name: STAINED_CLAY
+    
+    # Block data, e.g. if name is LOG, and data is 1, this would be a spruce log
+    data: 7 
+    
+    # Speed multiplier. Derailing may happen when if multiplier > 2 and minecart turns a corner
+    multiplier: 1.5
+    
+# --- Slow Block ---
+slow_block:
+    # Block name, e.g. STONE, GRASS etc.
+    name: STAINED_CLAY 
+    
+    # Block data, e.g. if name is LOG, and data is 1, this would be a spruce log
+    data: 6
+    
+    # Speed multiplier. Derailing may happen when if multiplier > 2 and minecart turns a corner
+    multiplier: 0.5 
 
-# Set boost block item data type (e.g. for granite, smooth sandstone etc. 
-# If no need to use this, simply set to 0
-boost_block_data: 0
-
-# Set boost multiplier. Note that minecart will derail on
-# curves if setting > 2. If you don't want this, ensure minecart
-# is slowed on approach to curve, or setting is <= 2
-boost_amount: 1.5
-
-# --- Brake Block ---
-# Set brake block item
-brake_block : HARD_CLAY
-
-# Set boost block item data type (e.g. for granite, smooth sandstone etc. 
-# If no need to use this, simply set to 0
-brake_block_data: 0
-
-# Set brake multiplier.
-brake_amount: 0.5
+# --- Normal Speed Block ---
+# This block sets the speed of the minecart to the default max speed.
+# Set normal speed block item
+normal_speed_block:
+    # Block name, e.g. STONE, GRASS etc.
+    name: STONE 
+    
+    # Block data, e.g. if name is LOG, and data is 1, this would be a spruce log
+    data: 0
